@@ -5,7 +5,7 @@
   
 
 
-<html class="theme-next muse use-motion" lang>
+<html class="theme-next gemini use-motion" lang>
 <head><meta name="generator" content="Hexo 3.8.0">
   <meta charset="UTF-8">
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -68,7 +68,7 @@
 
 
 
-  <meta name="keywords" content="Hexo, NexT">
+  <meta name="keywords" content="线程池,">
 
 
 
@@ -79,17 +79,18 @@
 
 
 
-<meta name="description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="description" content="1NQ高效线程池 关于1NQueue框架的使用和设计思考：1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。框架的应用和设计思想也很简单，在 保证线程池灵活伸缩 的基础上，通过一定的改造， 使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力 。 特点： ①前置收集：">
+<meta name="keywords" content="线程池">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Hello World">
-<meta property="og:url" content="http://yoursite.com/2019/02/26/hello-world/index.html">
-<meta property="og:site_name" content="Hexo">
-<meta property="og:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta property="og:title" content="探索高性能线程池">
+<meta property="og:url" content="http://yoursite.com/2018/06/23/探索高性能线程池.md/index.html">
+<meta property="og:site_name" content="bboym">
+<meta property="og:description" content="1NQ高效线程池 关于1NQueue框架的使用和设计思考：1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。框架的应用和设计思想也很简单，在 保证线程池灵活伸缩 的基础上，通过一定的改造， 使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力 。 特点： ①前置收集：">
 <meta property="og:locale" content="default">
-<meta property="og:updated_time" content="2019-02-26T03:22:19.976Z">
+<meta property="og:updated_time" content="2019-02-26T15:35:15.281Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Hello World">
-<meta name="twitter:description" content="Welcome to Hexo! This is your very first post. Check documentation for more info. If you get any problems when using Hexo, you can find the answer in troubleshooting or you can ask me on GitHub. Quick">
+<meta name="twitter:title" content="探索高性能线程池">
+<meta name="twitter:description" content="1NQ高效线程池 关于1NQueue框架的使用和设计思考：1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。框架的应用和设计思想也很简单，在 保证线程池灵活伸缩 的基础上，通过一定的改造， 使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力 。 特点： ①前置收集：">
 
 
 
@@ -97,7 +98,7 @@
   var NexT = window.NexT || {};
   var CONFIG = {
     root: '/',
-    scheme: 'Muse',
+    scheme: 'Gemini',
     version: '5.1.4',
     sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
     fancybox: true,
@@ -119,13 +120,13 @@
 
 
 
-  <link rel="canonical" href="http://yoursite.com/2019/02/26/hello-world/">
+  <link rel="canonical" href="http://yoursite.com/2018/06/23/探索高性能线程池.md/">
 
 
 
 
 
-  <title>Hello World | Hexo</title>
+  <title>探索高性能线程池 | bboym</title>
   
 
 
@@ -155,7 +156,7 @@
     <div class="custom-logo-site-title">
       <a href="/" class="brand" rel="start">
         <span class="logo-line-before"><i></i></span>
-        <span class="site-title">Hexo</span>
+        <span class="site-title">bboym</span>
         <span class="logo-line-after"><i></i></span>
       </a>
     </div>
@@ -190,12 +191,52 @@
         </li>
       
         
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br>
+            
+            About
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-tags">
+          <a href="/tags/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-tags"></i> <br>
+            
+            Tags
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-categories">
+          <a href="/categories/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-th"></i> <br>
+            
+            Categories
+          </a>
+        </li>
+      
+        
         <li class="menu-item menu-item-archives">
           <a href="/archives/" rel="section">
             
               <i class="menu-item-icon fa fa-fw fa-archive"></i> <br>
             
             Archives
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-commonweal">
+          <a href="/404/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-heartbeat"></i> <br>
+            
+            Commonweal 404
           </a>
         </li>
       
@@ -232,16 +273,16 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/02/26/hello-world/">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/23/探索高性能线程池.md/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="name" content="John Doe">
+      <meta itemprop="name" content="bboym">
       <meta itemprop="description" content>
-      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="image" content="/images/avatar.jpg">
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Hexo">
+      <meta itemprop="name" content="bboym">
     </span>
 
     
@@ -249,7 +290,7 @@
 
         
         
-          <h1 class="post-title" itemprop="name headline">Hello World</h1>
+          <h1 class="post-title" itemprop="name headline">探索高性能线程池</h1>
         
 
         <div class="post-meta">
@@ -261,8 +302,8 @@
               
                 <span class="post-meta-item-text">Posted on</span>
               
-              <time title="Post created" itemprop="dateCreated datePublished" datetime="2019-02-26T11:22:19+08:00">
-                2019-02-26
+              <time title="Post created" itemprop="dateCreated datePublished" datetime="2018-06-23T00:00:00+08:00">
+                2018-06-23
               </time>
             
 
@@ -272,6 +313,28 @@
           </span>
 
           
+            <span class="post-category">
+            
+              <span class="post-meta-divider">|</span>
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">In</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+                  <a href="/categories/线程池/" itemprop="url" rel="index">
+                    <span itemprop="name">线程池</span>
+                  </a>
+                </span>
+
+                
+                
+              
+            </span>
+          
 
           
             
@@ -280,8 +343,8 @@
                 <span class="post-meta-item-icon">
                   <i class="fa fa-comment-o"></i>
                 </span>
-                <a href="/2019/02/26/hello-world/#comments" itemprop="discussionUrl">
-                  <span class="post-comments-count ds-thread-count" data-thread-key="2019/02/26/hello-world/" itemprop="commentCount"></span>
+                <a href="/2018/06/23/探索高性能线程池.md/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count ds-thread-count" data-thread-key="2018/06/23/探索高性能线程池.md/" itemprop="commentCount"></span>
                 </a>
               </span>
             
@@ -309,15 +372,12 @@
       
 
       
-        <p>Welcome to <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a>! This is your very first post. Check <a href="https://hexo.io/docs/" target="_blank" rel="noopener">documentation</a> for more info. If you get any problems when using Hexo, you can find the answer in <a href="https://hexo.io/docs/troubleshooting.html" target="_blank" rel="noopener">troubleshooting</a> or you can ask me on <a href="https://github.com/hexojs/hexo/issues" target="_blank" rel="noopener">GitHub</a>.</p>
-<h2 id="Quick-Start"><a href="#Quick-Start" class="headerlink" title="Quick Start"></a>Quick Start</h2><h3 id="Create-a-new-post"><a href="#Create-a-new-post" class="headerlink" title="Create a new post"></a>Create a new post</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo new <span class="string">"My New Post"</span></span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/writing.html" target="_blank" rel="noopener">Writing</a></p>
-<h3 id="Run-server"><a href="#Run-server" class="headerlink" title="Run server"></a>Run server</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo server</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/server.html" target="_blank" rel="noopener">Server</a></p>
-<h3 id="Generate-static-files"><a href="#Generate-static-files" class="headerlink" title="Generate static files"></a>Generate static files</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo generate</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/generating.html" target="_blank" rel="noopener">Generating</a></p>
-<h3 id="Deploy-to-remote-sites"><a href="#Deploy-to-remote-sites" class="headerlink" title="Deploy to remote sites"></a>Deploy to remote sites</h3><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">$ hexo deploy</span><br></pre></td></tr></table></figure>
-<p>More info: <a href="https://hexo.io/docs/deployment.html" target="_blank" rel="noopener">Deployment</a></p>
+        <p>1NQ高效线程池</p>
+<p><strong>关于1NQueue框架的使用和设计思考：</strong><br>1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。<br>框架的应用和设计思想也很简单，在 <strong>保证线程池灵活伸缩</strong> 的基础上，通过一定的改造， <strong>使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力</strong> 。</p>
+<p>特点：</p>
+<p>①前置收集：收集提交任务的时候可以在异步提交的基础上再自定义一个Queue，整个流程是任务先提交到Queue我们再启动一个守护线程去不断拉取并往线程池提交，这样以来相当于在水池入口处安装了一个三角漏斗，使水的流速在快的情况下减缓注入，有点时间换空间思想，但也不全是。<br>②后置处理：线程池任务到达一定阈值会触发拒绝策略，1NQ自定义拒绝策略，启用线程Deque模式，将所有任务Drawto到Deque中。</p>
+<p>所以，倘若我们固定了大小，带来的后果就是要么处理能力闲置导致资源浪费，要么就是处理能力不够导致应用性能下降。</p>
+<p>如果使用无界的线程池就等于放弃了线程池的伸缩性，这样，线程池就变成了一个固定大小的线程池。这样的话，线程数量的设置就成了一个比较棘手的问题，过大，会造成资源的浪费，过小，会出现性能不足的情况。<br>所以，我们可以自定义线程池来针对具体业务模型提高并发处理能力，也像netty那样，在JDK基础上自定义了一堆高性能的组件，从而更高效的挖掘CPU处理能力。</p>
 
       
     </div>
@@ -328,10 +388,40 @@
     
 
     
+      <div>
+        <div style="padding: 10px 0; margin: 20px auto; width: 90%; text-align: center;">
+  <div>如果觉得有用，不妨请作者喝杯咖啡呀~</div>
+  <button id="rewardButton" disable="enable" onclick="var qr = document.getElementById('QR'); if (qr.style.display === 'none') {qr.style.display='block';} else {qr.style.display='none'}">
+    <span>Donate</span>
+  </button>
+  <div id="QR" style="display: none;">
+
+    
+      <div id="wechat" style="display: inline-block">
+        <img id="wechat_qr" src="/images/wechat.jpg" alt="bboym WeChat Pay">
+        <p>WeChat Pay</p>
+      </div>
+    
+
+    
+
+    
+
+  </div>
+</div>
+
+      </div>
+    
 
     
 
     <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/线程池/" rel="tag"># 线程池</a>
+          
+        </div>
       
 
       
@@ -342,15 +432,15 @@
         <div class="post-nav">
           <div class="post-nav-next post-nav-item">
             
+              <a href="/2018/05/01/BIO NIO AIO 之IO模型原理剖析.md/" rel="next" title="BIO NIO AIO 之IO模型原理剖析">
+                <i class="fa fa-chevron-left"></i> BIO NIO AIO 之IO模型原理剖析
+              </a>
+            
           </div>
 
           <span class="post-nav-divider"></span>
 
           <div class="post-nav-prev post-nav-item">
-            
-              <a href="/2019/02/26/test/" rel="prev" title="test">
-                test <i class="fa fa-chevron-right"></i>
-              </a>
             
           </div>
         </div>
@@ -381,7 +471,7 @@
 
   
     <div class="comments" id="comments">
-      <div class="ds-thread" data-thread-key="2019/02/26/hello-world/" data-title="Hello World" data-url="http://yoursite.com/2019/02/26/hello-world/">
+      <div class="ds-thread" data-thread-key="2018/06/23/探索高性能线程池.md/" data-title="探索高性能线程池" data-url="http://yoursite.com/2018/06/23/探索高性能线程池.md/">
       </div>
     </div>
 
@@ -408,21 +498,14 @@
       
 
       
-        <ul class="sidebar-nav motion-element">
-          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
-            Table of Contents
-          </li>
-          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
-            Overview
-          </li>
-        </ul>
-      
 
-      <section class="site-overview-wrap sidebar-panel">
+      <section class="site-overview-wrap sidebar-panel sidebar-panel-active">
         <div class="site-overview">
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
             
-              <p class="site-author-name" itemprop="name">John Doe</p>
+              <img class="site-author-image" itemprop="image" src="/images/avatar.jpg" alt="bboym">
+            
+              <p class="site-author-name" itemprop="name">bboym</p>
               <p class="site-description motion-element" itemprop="description"></p>
           </div>
 
@@ -433,14 +516,32 @@
               
                 <a href="/archives/">
               
-                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-count">4</span>
                   <span class="site-state-item-name">posts</span>
                 </a>
               </div>
             
 
             
+              
+              
+              <div class="site-state-item site-state-categories">
+                <a href="/categories/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">categories</span>
+                </a>
+              </div>
+            
 
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                <a href="/tags/index.html">
+                  <span class="site-state-item-count">4</span>
+                  <span class="site-state-item-name">tags</span>
+                </a>
+              </div>
             
 
           </nav>
@@ -453,25 +554,25 @@
                   <span class="links-of-author-item">
                     <a href="https://github.com/bboym" target="_blank" title="GitHub">
                       
-                        <i class="fa fa-fw fa-globe"></i>GitHub</a>
+                        <i class="fa fa-fw fa-github"></i>GitHub</a>
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="http://douban.com/people/bboym" target="_blank" title="����">
+                    <a href="mengwang6666@gmail.com" target="_blank" title="E-Mail">
                       
-                        <i class="fa fa-fw fa-globe"></i>����</a>
+                        <i class="fa fa-fw fa-envelope"></i>E-Mail</a>
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="http://www.zhihu.com/people/bboym" target="_blank" title="֪��">
+                    <a href="https://book.douban.com/people/139780695/reviews?cat_id=1001" target="_blank" title="Books">
                       
-                        <i class="fa fa-fw fa-globe"></i>֪��</a>
+                        <i class="fa fa-fw fa-book"></i>Books</a>
                   </span>
                 
                   <span class="links-of-author-item">
-                    <a href="mengwang6666@gmail.com" target="_blank" title="email">
+                    <a href="https://mp.weixin.qq.com/s/ijLeCEiQ-i4FpNha4cAMOg" target="_blank" title="Wechat">
                       
-                        <i class="fa fa-fw fa-globe"></i>email</a>
+                        <i class="fa fa-fw fa-wechat"></i>Wechat</a>
                   </span>
                 
             </div>
@@ -489,22 +590,6 @@
       </section>
 
       
-      <!--noindex-->
-        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
-          <div class="post-toc">
-
-            
-              
-            
-
-            
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#Quick-Start"><span class="nav-number">1.</span> <span class="nav-text">Quick Start</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Create-a-new-post"><span class="nav-number">1.1.</span> <span class="nav-text">Create a new post</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Run-server"><span class="nav-number">1.2.</span> <span class="nav-text">Run server</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Generate-static-files"><span class="nav-number">1.3.</span> <span class="nav-text">Generate static files</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Deploy-to-remote-sites"><span class="nav-number">1.4.</span> <span class="nav-text">Deploy to remote sites</span></a></li></ol></li></ol></div>
-            
-
-          </div>
-        </section>
-      <!--/noindex-->
-      
 
       
 
@@ -518,11 +603,11 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
+        <div class="copyright">&copy; 2017 &mdash; <span itemprop="copyrightYear">2019</span>
   <span class="with-love">
     <i class="fa fa-user"></i>
   </span>
-  <span class="author" itemprop="copyrightHolder">John Doe</span>
+  <span class="author" itemprop="copyrightHolder">bboym</span>
 
   
 </div>
@@ -536,7 +621,7 @@
 
 
 
-  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Muse</a> v5.1.4</div>
+  <div class="theme-info">Theme &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Gemini</a> v5.1.4</div>
 
 
 
@@ -635,6 +720,13 @@
 
   
   
+
+
+  <script type="text/javascript" src="/js/src/affix.js?v=5.1.4"></script>
+
+  <script type="text/javascript" src="/js/src/schemes/pisces.js?v=5.1.4"></script>
+
+
 
   
   <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.4"></script>
