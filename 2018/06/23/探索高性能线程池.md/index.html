@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="1NQ高效线程池 关于1NQueue框架的使用和设计思考：1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。框架的应用和设计思想也很简单，在 保证线程池灵活伸缩 的基础上，通过一定的改造， 使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力 。 特点： ①前置收集：">
+<meta property="og:type" content="article">
+<meta property="og:title" content="探索高性能线程池">
+<meta property="og:url" content="http://yoursite.com/2018/06/23/%E6%8E%A2%E7%B4%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BA%BF%E7%A8%8B%E6%B1%A0.md/index.html">
+<meta property="og:site_name" content="bboym">
+<meta property="og:description" content="1NQ高效线程池 关于1NQueue框架的使用和设计思考：1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。框架的应用和设计思想也很简单，在 保证线程池灵活伸缩 的基础上，通过一定的改造， 使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力 。 特点： ①前置收集：">
+<meta property="og:locale">
+<meta property="article:published_time" content="2018-06-22T16:00:00.000Z">
+<meta property="article:modified_time" content="2021-11-03T10:14:27.691Z">
+<meta property="article:author" content="bboym">
+<meta property="article:tag" content="线程池">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="http://yoursite.com/2018/06/23/%E6%8E%A2%E7%B4%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BA%BF%E7%A8%8B%E6%B1%A0.md/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"http://yoursite.com/2018/06/23/%E6%8E%A2%E7%B4%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BA%BF%E7%A8%8B%E6%B1%A0.md/","path":"2018/06/23/探索高性能线程池.md/","title":"探索高性能线程池"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>探索高性能线程池 | bboym</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">bboym</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">bboym</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">4</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">7</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2018/06/23/%E6%8E%A2%E7%B4%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BA%BF%E7%A8%8B%E6%B1%A0.md/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bboym">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bboym">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          探索高性能线程池
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2018-06-23 00:00:00" itemprop="dateCreated datePublished" datetime="2018-06-23T00:00:00+08:00">2018-06-23</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2021-11-03 18:14:27" itemprop="dateModified" datetime="2021-11-03T18:14:27+08:00">2021-11-03</time>
+      </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-folder"></i>
+      </span>
+      <span class="post-meta-item-text">In</span>
+        <span itemprop="about" itemscope itemtype="http://schema.org/Thing">
+          <a href="/categories/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" itemprop="url" rel="index"><span itemprop="name">线程池</span></a>
+        </span>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>1NQ高效线程池</p>
+<p><strong>关于1NQueue框架的使用和设计思考：</strong><br>1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。<br>框架的应用和设计思想也很简单，在 <strong>保证线程池灵活伸缩</strong> 的基础上，通过一定的改造， <strong>使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力</strong> 。</p>
+<p>特点：</p>
+<p>①前置收集：收集提交任务的时候可以在异步提交的基础上再自定义一个Queue，整个流程是任务先提交到Queue我们再启动一个守护线程去不断拉取并往线程池提交，这样以来相当于在水池入口处安装了一个三角漏斗，使水的流速在快的情况下减缓注入，有点时间换空间思想，但也不全是。<br>②后置处理：线程池任务到达一定阈值会触发拒绝策略，1NQ自定义拒绝策略，启用线程Deque模式，将所有任务Drawto到Deque中。</p>
+<p>所以，倘若我们固定了大小，带来的后果就是要么处理能力闲置导致资源浪费，要么就是处理能力不够导致应用性能下降。</p>
+<p>如果使用无界的线程池就等于放弃了线程池的伸缩性，这样，线程池就变成了一个固定大小的线程池。这样的话，线程数量的设置就成了一个比较棘手的问题，过大，会造成资源的浪费，过小，会出现性能不足的情况。<br>所以，我们可以自定义线程池来针对具体业务模型提高并发处理能力，也像netty那样，在JDK基础上自定义了一堆高性能的组件，从而更高效的挖掘CPU处理能力。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E7%BA%BF%E7%A8%8B%E6%B1%A0/" rel="tag"># 线程池</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2018/05/01/BIO%20NIO%20AIO%20%E4%B9%8BIO%E6%A8%A1%E5%9E%8B%E5%8E%9F%E7%90%86%E5%89%96%E6%9E%90.md/" rel="prev" title="BIO NIO AIO 之IO模型原理剖析">
+                  <i class="fa fa-chevron-left"></i> BIO NIO AIO 之IO模型原理剖析
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/09/16/java8%E6%96%B0%E7%89%B9%E6%80%A7/" rel="next" title="java8新特性">
+                  java8新特性 <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2021</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bboym</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
