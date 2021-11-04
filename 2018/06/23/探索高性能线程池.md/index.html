@@ -20,12 +20,12 @@
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="1NQ高效线程池 关于1NQueue框架的使用和设计思考：1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。框架的应用和设计思想也很简单，在 保证线程池灵活伸缩 的基础上，通过一定的改造， 使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力 。 特点： ①前置收集：">
+<meta name="description" content="1NQ高效线程池 关于1NQueue框架的使用和设计思考：1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。框架的应用和设计思想也很简单，在 保证线程池灵活伸缩 的基础上，通过一定的改造， 使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力 。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="探索高性能线程池">
 <meta property="og:url" content="http://yoursite.com/2018/06/23/%E6%8E%A2%E7%B4%A2%E9%AB%98%E6%80%A7%E8%83%BD%E7%BA%BF%E7%A8%8B%E6%B1%A0.md/index.html">
 <meta property="og:site_name" content="bboym">
-<meta property="og:description" content="1NQ高效线程池 关于1NQueue框架的使用和设计思考：1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。框架的应用和设计思想也很简单，在 保证线程池灵活伸缩 的基础上，通过一定的改造， 使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力 。 特点： ①前置收集：">
+<meta property="og:description" content="1NQ高效线程池 关于1NQueue框架的使用和设计思考：1NQueue设计的目的，是为了轻而快的帮助应用实现异步处理，同时降低请求并行度及提高应用吞吐量。最终实现，通过很小的改动及非常轻的体量，帮助应用在性能方面实现比较大的提升。框架的应用和设计思想也很简单，在 保证线程池灵活伸缩 的基础上，通过一定的改造， 使整个框架具备一个很高的执行效率，充分挖掘并行计算的处理能力 。">
 <meta property="og:locale">
 <meta property="article:published_time" content="2018-06-22T16:00:00.000Z">
 <meta property="article:modified_time" content="2021-11-03T10:14:27.691Z">
