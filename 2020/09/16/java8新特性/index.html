@@ -19,13 +19,13 @@
 <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
 
-<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
-<meta name="description" content="Java8 新特性总结12345678910一、lamada、函数式编程二、Stream介绍   Stream流⽔线解决⽅案三、默认方法:四、异步处理五、时间处理类六、why java8?七、函数编程技巧八、结论总结九、附录">
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="Java8 新特性总结12345678910一、lamada、函数式编程二、Stream介绍   Stream流⽔线解决⽅案三、默认方法:四、异步处理五、时间处理类六、why java8?七、函数编程技巧八、结论总结九、附录 一、lamada、函数式编程函数式编程:即行为参数化; lamada: 简洁地表示可传递的匿名函数的一种方式:它没有名称，但它有参数列列表、函数主体、返回类型，可能还有⼀一个">
 <meta property="og:type" content="article">
 <meta property="og:title" content="java8新特性">
 <meta property="og:url" content="http://yoursite.com/2020/09/16/java8%E6%96%B0%E7%89%B9%E6%80%A7/index.html">
 <meta property="og:site_name" content="bboym">
-<meta property="og:description" content="Java8 新特性总结12345678910一、lamada、函数式编程二、Stream介绍   Stream流⽔线解决⽅案三、默认方法:四、异步处理五、时间处理类六、why java8?七、函数编程技巧八、结论总结九、附录">
+<meta property="og:description" content="Java8 新特性总结12345678910一、lamada、函数式编程二、Stream介绍   Stream流⽔线解决⽅案三、默认方法:四、异步处理五、时间处理类六、why java8?七、函数编程技巧八、结论总结九、附录 一、lamada、函数式编程函数式编程:即行为参数化; lamada: 简洁地表示可传递的匿名函数的一种方式:它没有名称，但它有参数列列表、函数主体、返回类型，可能还有⼀一个">
 <meta property="og:locale">
 <meta property="og:image" content="http://yoursite.com/images/java8%E6%96%B0%E7%89%B9%E6%80%A7/image-20211102184003983.png">
 <meta property="og:image" content="http://yoursite.com/images/java8%E6%96%B0%E7%89%B9%E6%80%A7/image-20211102185024921.png">
@@ -216,6 +216,20 @@
       </span>
 
   
+  
+  <span class="post-meta-item">
+    
+    <span class="post-meta-item-icon">
+      <i class="far fa-comment"></i>
+    </span>
+    <span class="post-meta-item-text">Valine: </span>
+  
+    <a title="valine" href="/2020/09/16/java8%E6%96%B0%E7%89%B9%E6%80%A7/#valine-comments" itemprop="discussionUrl">
+      <span class="post-comments-count valine-comment-count" data-xid="/2020/09/16/java8%E6%96%B0%E7%89%B9%E6%80%A7/" itemprop="commentCount"></span>
+    </a>
+  </span>
+  
+  
 </div>
 
         </div>
@@ -386,6 +400,7 @@
 
 
 
+    <div class="comments" id="valine-comments"></div>
 </div>
   </main>
 
@@ -422,6 +437,21 @@
 
 
 
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"tJcNaqdwInnVsP8vx7ezR1Oh-gzGzoHsz","appKey":"vII23FLEbDtHRSOo2xsYCcLJ","serverURLs":"https://tjcnaqdw.api.lncldglobal.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":false,"comment_count":true,"recordIP":false,"enableQQ":false,"requiredFields":[],"el":"#valine-comments","path":"/2020/09/16/java8%E6%96%B0%E7%89%B9%E6%80%A7/"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
 
 </body>
 </html>
