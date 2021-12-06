@@ -384,7 +384,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-11-03 21:16:58" itemprop="dateModified" datetime="2021-11-03T21:16:58+08:00">2021-11-03</time>
+        <time title="Modified: 2021-12-06 17:18:03" itemprop="dateModified" datetime="2021-12-06T17:18:03+08:00">2021-12-06</time>
       </span>
 
   
@@ -405,7 +405,7 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <h1 id="Java8-新特性总结"><a href="#Java8-新特性总结" class="headerlink" title="Java8 新特性总结"></a>Java8 新特性总结</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">一、lamada、函数式编程</span><br><span class="line">二、Stream介绍</span><br><span class="line">   Stream流⽔线解决⽅案</span><br><span class="line">三、默认方法:</span><br><span class="line">四、异步处理</span><br><span class="line">五、时间处理类</span><br><span class="line">六、why java8?</span><br><span class="line">七、函数编程技巧</span><br><span class="line">八、结论总结</span><br><span class="line">九、附录</span><br></pre></td></tr></table></figure>
+          <h1 id="Java8-新特性总结"><a href="#Java8-新特性总结" class="headerlink" title="Java8 新特性总结"></a>Java8 新特性总结</h1><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">一、lamada、函数式编程</span><br><span class="line">二、Stream介绍</span><br><span class="line">   Stream流⽔线解决⽅案</span><br><span class="line">三、默认方法:</span><br><span class="line">四、异步处理</span><br><span class="line">五、时间处理类</span><br><span class="line">六、why java8?</span><br><span class="line">七、函数编程技巧</span><br><span class="line">八、超越java 8—jdk版本重大特性总结</span><br><span class="line">九、结论总结</span><br><span class="line">十、附录</span><br></pre></td></tr></table></figure>
 <h2 id="一、lamada、函数式编程"><a href="#一、lamada、函数式编程" class="headerlink" title="一、lamada、函数式编程"></a>一、lamada、函数式编程</h2><h5 id="函数式编程"><a href="#函数式编程" class="headerlink" title="函数式编程:"></a>函数式编程:</h5><p>即行为参数化;</p>
 <p><strong>lamada:</strong></p>
 <p>简洁地表示可传递的匿名函数的一种方式:它没有名称，但它有参数列列表、函数主体、返回类型，可能还有⼀一个可以︎出的异常列列表。</p>
@@ -515,7 +515,16 @@
 <p><img src="/images/java8%E6%96%B0%E7%89%B9%E6%80%A7/image-20211102194326898.png" alt="image-20211102194326898"></p>
 </li>
 </ul>
-<h2 id="八、结论总结"><a href="#八、结论总结" class="headerlink" title="八、结论总结"></a>八、结论总结</h2><p>1 、行为参数化(Lambda以及方法引用)</p>
+<h2 id="八、超越java-8—jdk版本重大特性总结"><a href="#八、超越java-8—jdk版本重大特性总结" class="headerlink" title="八、超越java 8—jdk版本重大特性总结"></a>八、超越java 8—jdk版本重大特性总结</h2><p><strong>Java 8</strong> <strong>:</strong>  <strong>lambda 函数式计算、</strong> <strong>stream 、 JVM 废弃永久代 , 引入</strong> metaSpace 区</p>
+<p><strong>Java9</strong> <strong>:</strong>     <strong>Jigsaw</strong> <strong>模块系统</strong> <strong>( 打包模块化 )</strong> </p>
+<p>  <strong>增强了</strong> <strong>Stream ， Optional ， Process API</strong></p>
+<h6 id="新增-HTTP2-Client"><a href="#新增-HTTP2-Client" class="headerlink" title="新增 HTTP2 Client"></a><strong>新增</strong> <strong>HTTP2 Client</strong></h6><p><strong>Java 10:</strong> <strong>新增局部类型推断</strong> <strong>var</strong></p>
+<p><strong>Java</strong> <strong>11</strong> <strong>:</strong> <strong>Lambda</strong> <strong>表达式中使用</strong> <strong>var ,</strong> <strong>引入 ZGC( 实验功能 )</strong></p>
+<p><strong>Java 12 :</strong> <strong>switch</strong> <strong>表达式扩展 ,</strong> <strong>增强 g1</strong> <strong>( 自动返回未使用堆给操作系统 )</strong></p>
+<p> <strong>java 13 :</strong> <strong>增强 ZGC( 释放未使用内存 ) 、引入文本块功能</strong></p>
+<p><strong>Java 14:</strong> 移除CMS收集器</p>
+<p><strong>Java 15(2020-9-15 发布 ): ZGC 、</strong> <strong>Shenandoah 垃圾回器 从实验功能变为产品功能</strong></p>
+<h2 id="九、结论总结"><a href="#九、结论总结" class="headerlink" title="九、结论总结"></a>九、结论总结</h2><p>1 、行为参数化(Lambda以及方法引用)</p>
 <p>这些值具有类似Function&lt;T, R&gt;、Predicate或者BiFunction&lt;T, U, R&gt;这样的类型，值的接收方可以通过<br>apply、test或其他类似的⽅法执行这些方法。Lambda表达式自身是 一个相当酷︎的概念，不不过Java 8对<br>它们的使用方式——将它们与全新的Stream API相结合，最终把它们推向了了新一代Java的核⼼。</p>
 <p>2 、流</p>
 <p>它采用︎︎算法将这些操作组成一个流水线，通过单次流遍历， 一次性完成所有的操作。</p>
@@ -526,7 +535,7 @@
 <p>如果在程序中始终如一地使用Optional，你的应⽤应该永远不会发⽣生NullPointerException异常。</p>
 <p>5 、默认⽅法</p>
 <p>它提供的能力能帮助类库的设计者们定义新的操作，增强接口的能力，它们︎蔽了将来的变化对用户的<br>影响.</p>
-<h2 id="九、附录"><a href="#九、附录" class="headerlink" title="九、附录"></a>九、附录</h2><p>Lambda表︎式和JVM︎字节码</p>
+<h2 id="十、附录"><a href="#十、附录" class="headerlink" title="十、附录"></a>十、附录</h2><p>Lambda表︎式和JVM︎字节码</p>
 <p>编译时，匿匿名类和Lambda表达式使⽤了不不同的字节码指令。(javap -c -v ClassName)</p>
 <p>Lambda <strong>创建额外的类</strong> 现在被invokedynamic指令替代了了。这种方式使⽤用 <strong>invokedynamic</strong> ，可以将实现<br>Lambda表达式的这部分代码的字节码⽣成 推︎到运行时。这种情况下，编译器可以生成 ⼀一个方法，该⽅<br>法含有该Lambda表达式同样的签名.</p>
 <h5 id="参考"><a href="#参考" class="headerlink" title="参考:"></a>参考:</h5><p>流介绍: <a target="_blank" rel="noopener" href="https://www.edjdhbb.com/2019/02/23/java-8-stream%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/">https://www.edjdhbb.com/2019/02/23/java-8-stream%E5%BA%95%E5%B1%82%E5%8E%9F%E7%90%86/</a></p>
