@@ -115,7 +115,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-count">8</span>
           <span class="site-state-item-name">posts</span>
         </a>
       </div>
@@ -155,6 +155,210 @@
 
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/04/18/%E7%A8%8B%E5%BA%8F%E5%91%98%E8%BD%AF%E6%8A%80%E8%83%BD/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bboym">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bboym">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2022/04/18/%E7%A8%8B%E5%BA%8F%E5%91%98%E8%BD%AF%E6%8A%80%E8%83%BD/" class="post-title-link" itemprop="url">程序员软技能</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+      
+
+      <time title="Created: 2022-04-18 21:54:48 / Modified: 22:19:06" itemprop="dateCreated datePublished" datetime="2022-04-18T21:54:48+08:00">2022-04-18</time>
+    </span>
+
+  
+    <span id="/2022/04/18/%E7%A8%8B%E5%BA%8F%E5%91%98%E8%BD%AF%E6%8A%80%E8%83%BD/" class="post-meta-item leancloud_visitors" data-flag-title="程序员软技能" title="Views">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <h1 id="上篇："><a href="#上篇：" class="headerlink" title="上篇："></a>上篇：</h1><h2 id="工具、效率、时间管理"><a href="#工具、效率、时间管理" class="headerlink" title="工具、效率、时间管理"></a>工具、效率、时间管理</h2><p>引：<br>      <strong>要成为一名专业人士，需要养成的另外一个强大的习惯就是时间管理技能</strong></p>
+<h3 id="一、工具（软件开发工程师）"><a href="#一、工具（软件开发工程师）" class="headerlink" title="一、工具（软件开发工程师）"></a>一、工具（软件开发工程师）</h3><p><strong>好用的工具可以在开发中处理一些事情上达到事半功倍的效果</strong></p>
+<ul>
+<li><p>编译器：IntelliJ IDEA、Eclipse（老牌工具可以淘汰了）日常写代码</p>
+</li>
+<li><p>终端：ITerm2 + oh My zsh， Mac下好用的终端，自带一系列常用 alias、选中即复制、强大的bash等等，完成日常一些终端操作（提交代码、mvn编译、ssh登陆（可配置一键登录或alias）等等）</p>
+</li>
+<li><p>浏览器：chrome+一系列方便的插件（Vimium、Adblock、ESHead、划词翻译、掘金、Tampermonkey等等）着重推荐Vimium 基本操作浏览器可以不用鼠标了，习惯后效率肯定高于鼠标操作。</p>
+</li>
+<li><p>本地/远程调试：postman </p>
+</li>
+<li><p>数据库管理工具：Sequel Pro， mac下快捷键切换比较方便</p>
+</li>
+<li><p>任务管理TickTick：滴答清单（自带番茄时钟和todoList）</p>
+</li>
+<li><p>git一些好用的界面工具：GitHub Desktop（方便看diff避免误提交）+Sourcetree（方便看git log和搜索）git命令都可以做到但展示效果没有界面工具效果好。</p>
+</li>
+<li><p>终极神器：Alfred，可以完成mac下一系列的骚操作. 比如快速切换上面一堆应用、一键执行mac上任何一个任务及打开某个功能、搜索某个东西、比如定制自己的workflow基于脚本一键完成线上token获取等等等。</p>
+</li>
+</ul>
+<p>以上，串起来上面的工具，代码写到提交完整过程可以是：从自己todo管理工具里找到任务—-&gt;idea写代码—-&gt;打开github desktop对比本次git diff差异-→item2 mvn自编译通过再提交。</p>
+<p>   <strong>git相关常用操作（因此强烈建议配置alias）</strong>                           ：</p>
+<ul>
+<li><p>推送拉取合并：git pull、git rebase、git merge、git push -f origin/xx</p>
+</li>
+<li><p>本地常用commit点操作：git checkout xxx 、git checkout -b xxx、git amend 、git rebase -i </p>
+</li>
+<li><p>多任务协同开发：git stash 或每个任务单独切分支，每次push前pull 并rebase下远程分支避免分支和提交的path冲突混乱，合入后再git branch -D 删掉</p>
+</li>
+<li><p>回退恢复：git reset –hard/soft (hash) </p>
+</li>
+<li><p>操作提交的commit远程分支上线前用得比较多：git revert/git cherry pick等</p>
+</li>
+</ul>
+<h3 id="二、效率-amp-时间管理"><a href="#二、效率-amp-时间管理" class="headerlink" title="二、效率&amp;时间管理"></a>二、效率&amp;时间管理</h3><p>即一些工作意识</p>
+<p><strong>早晨</strong>——一天的开始：比如早上打开电脑第一步：check 当天邮件会议&amp;日程安排、番茄(活动清单-&gt;今日待办—&gt;估算番茄数（25分钟/个）—&gt;执行+反馈记录) 请使用至少2星期，然后好习惯的话，若有比较重要线上业务监控，可以看看监控图、每天要解的bug、查收邮件可以固定放在某一定点，在工作中的番茄时间里尽量不被外界因素打破（会议），定时看看提交的patch列表在里面找几个评审review下。</p>
+<pre><code> 除了TickTick（滴答清单）工具外，也可使用名为Trello（http://trello.com）、Kanbanflow（http://simpleprogrammer.com/ss-kanbanflow）的工具作为看板来组织一周的工作，推荐后者，因为Kanbanflow有一个内置的番茄钟定时器。
+</code></pre>
+<p><strong>晚上</strong>——一天的结束：晚上固定时间回顾跟踪当天清单里task完成情况，基于番茄时钟时间追踪，了解分析每天的时间都是怎么花掉的，看看数据，找出最大的2～3个时间杀手，并及时调整必要的话反思或反馈等等。<br>关于会议：符合精简原则，关于精简会议的更多细节，可以参考Jason Fried和David Heinemeier Hansson合著的《重来》（Rewor）［Crown Publishing Group, 2010］。豆瓣<br><strong>学会分解任务——要吃掉一头大象，每次吃一口</strong><br><strong>关于复盘</strong>：复盘的意义是什么，我们为什么要复盘？推荐一部电影《萨利机长》<br><strong>排期&amp;管理</strong>：推荐一篇文章，看看NASA航天级别超级大项目是如何被高效管理的 “阿波罗”登月中的工程管理一瞥<br><strong>一些常见的时间杀手</strong><br>     看电视。<br>     社交媒体。<br>     新闻网站。<br>    不必要的会议。<br>    烹饪。<br>    玩电子游戏（尤其是网络游戏）。<br>    工间喝咖啡休息。</p>
+<h3 id="三、番茄工作法介绍"><a href="#三、番茄工作法介绍" class="headerlink" title="三、番茄工作法介绍"></a>三、番茄工作法介绍</h3><p>番茄工作法介绍<br>”对番茄工作法的正确理解可以令工作生活大为改观，它不仅能帮我能做更多事情，而且能让我可以尽情享受业余时间。一旦我完成了当天的目标（以番茄钟来度量的），我就可以自由自在地做自己想做的事情，甚至能事先控制自己将时间用在哪儿，而不是回过头看自己的花时间都去哪儿了。“ ——某书摘</p>
+<p>数学家、理论物理学家、工程师和科学哲学家昂利·庞加莱（Henri Poincaré）在一篇发表的文章<a target="_blank" rel="noopener" href="http://www.calnewport.com/blog/?s=%23craftsmanincubicle%E4%B8%AD%E5%86%99%E5%88%B0%EF%BC%9A">http://www.calnewport.com/blog/?s=%23craftsmanincubicle中写到：</a>   “加莱……通常在上午10点到12点和下午5点到7点工作。他发现工作再长时间也鲜有成果。”<br>John Resig的一篇博客文章，John是我非常尊敬的开发者。他在一篇题为“每天写代码”（Write Code Every Day）的文章中，谈到了自己的经历。他之前在业余项目上毫无进展，直到养成了每天至少用30分钟写一定量有用的代码的习惯。在实行新惯例之后，它成了一种习惯，这使他的生产    力获得了巨大的提高。<br>  可以在<a target="_blank" rel="noopener" href="http://simpleprogrammer.com/ss-write-code%E9%98%85%E8%AF%BB%E8%BF%99%E7%AF%87%E6%96%87%E7%AB%A0%E7%9A%84%E5%AE%8C%E6%95%B4%E5%86%85%E5%AE%B9%E3%80%82">http://simpleprogrammer.com/ss-write-code阅读这篇文章的完整内容。</a><br>番茄工作法介绍：一些番茄工作法有关的文章<a target="_blank" rel="noopener" href="https://monotasking.blog/">https://monotasking.blog/</a></p>
+<h3 id="四、相关书籍"><a href="#四、相关书籍" class="headerlink" title="四、相关书籍"></a>四、相关书籍</h3><p><strong>比较有现实指导意义的书籍</strong></p>
+<p>《软技能-代码之外的生存指南》<a target="_blank" rel="noopener" href="https://book.douban.com/subject/26835090/">https://book.douban.com/subject/26835090/</a></p>
+<p>《番茄工作法图解》<a target="_blank" rel="noopener" href="https://book.douban.com/subject/5916234/">https://book.douban.com/subject/5916234/</a>  </p>
+<p>《搞定-无压工作的艺术》<a target="_blank" rel="noopener" href="https://book.douban.com/subject/4849382/">https://book.douban.com/subject/4849382/</a></p>
+<p><strong>长期来看值得思考</strong> </p>
+<p>《原则-生活和工作》<a target="_blank" rel="noopener" href="https://book.douban.com/subject/30189843/">https://book.douban.com/subject/30189843/</a>  </p>
+<p>《暗时间》 <a target="_blank" rel="noopener" href="https://book.douban.com/subject/6709809/">https://book.douban.com/subject/6709809/</a> </p>
+<p>《奇特的一生》<a target="_blank" rel="noopener" href="https://book.douban.com/subject/1115353/">https://book.douban.com/subject/1115353/</a></p>
+<h1 id="下篇-："><a href="#下篇-：" class="headerlink" title="下篇 ："></a>下篇 ：</h1><h2 id="开发规范、迭代管理规范"><a href="#开发规范、迭代管理规范" class="headerlink" title="开发规范、迭代管理规范"></a>开发规范、迭代管理规范</h2><h3 id="一、迭代管理规范"><a href="#一、迭代管理规范" class="headerlink" title="一、迭代管理规范"></a>一、迭代管理规范</h3><h4 id="1-1迭代节奏"><a href="#1-1迭代节奏" class="headerlink" title="1.1迭代节奏"></a>1.1迭代节奏</h4><p><img src="/images/%E7%A8%8B%E5%BA%8F%E5%91%98%E8%BD%AF%E6%8A%80%E8%83%BD/image-20220418221210621.png" alt="image-20220418221210621"></p>
+<p>1.2、 Scrum 实践</p>
+<pre><code>                                                          1⃣️-9⃣️是一个敏捷迭代的过程
+</code></pre>
+<p>在阶段2⃣️的sprint Planning Meeting 中应该产生模块负责人，自愿方式（产生自RD、FE、PM）中。<br>              模块负责人职责：</p>
+<p>迭代周期中定期check所负责模块干系人员开发进度，同步风险。<br>协调资源，保障所负责模块顺利上线<br>参与日常站会</p>
+<p>在阶段3⃣️已经确定下了本期sprint Backlog后，接着还应该再做两件事：<br>              a)分派</p>
+<pre><code>         由负责人拆分大的需求卡片（可以是迭代需求和系统优化需求2部分），然后由开发同学主动认领或由负责人指派任务卡片。
+
+                   一个拆分后的icafe卡片应该至少包含：
+</code></pre>
+<p>任务标题及类型<br>必要时的任务内容概述<br>负责人<br>工时估算</p>
+<pre><code>         b)协调排期
+
+        往往一个需求在sprint期间需要PM、RD、FE、QA一起协作完成，因此在sprint的开始阶段4⃣️开始前，应该事先协调好不同角色参与者的排期。
+
+        具体方式可以是一个可以直观的展示时间轴的排期日历或看板墙，比如云端共享excel或目前采用的甘特图软件，方便sprint期间聚焦对齐，模块负责人也方便及时跟进。
+</code></pre>
+<p>​                 </p>
+<pre><code>         排期协作带来的好处：
+</code></pre>
+<p>模块负责人机制保障了分工明确，上下对齐，很好的锻炼了个人协调能力，帮项目总负责人（scrumMaster）分担精力<br>不同角色参与者事先明确排期，最大化的规避了delay风险，提高了彼此的效率和团队协同节奏感</p>
+<p>二、后端编程规范</p>
+<p>大部分上规则参考阿里巴巴Java开发手册（华山版）</p>
+<p>   开发中常见一些容易忽视的开发习惯整理：</p>
+<p>1、命名问题：<br>1.1、局部变量<br>反例<br>{<br>//过于随意的局部变量命名，不够整洁和严谨<br>User rs = userService.getUserInfoById(userId);<br>String m = rs.getMobile();<br>String id = rs.getIdCard();<br>String add = rs.getAddress();<br>String v = rs.getValue();<br>}</p>
+<p>正例<br>{<br>User user = userService.getUserInfoById(userId);<br>String mobile = user.getMobile();<br>String idCard = user.getIdCard();<br>String address = user.getAddress();<br>}<br>1.2、私有方法命名<br>私有方法有时候和会和当前所在类关系不太大，仅是临时用于抽取，故应该尽量在命名上能见名知义<br>反例：<br>Map getInfo(){<br>}<br>Map getMap(){<br>}</p>
+<p>2、循环嵌入较深<br>反例，嵌入过深，降低了代码可读性和可维护性<br>User rs = userService.getUserInfoById(userId);<br>if (rs != null) {<br>    Order rs2 = orderService.getOrderInfo(orderId);<br>    if (rs2 != null) {<br>        String name1 = rs2.getOrderName();<br>        if (name1 != null) {<br>            ///<br>        }<br>    }<br>}</p>
+<p>正例<br>//在一开始就取反返回，有效避免了后续更多的嵌入，或借助Optional消除分支判断<br>User user = userService.getUserInfoById(userId);<br>if (user == null) {<br>    return false;<br>}<br> Goods goods = stockService.getGoodsInfoById(goodsId);<br>if (goods == null) {<br>    return false;<br>}</p>
+<p>3、service做的逻辑过于冗余<br>1<br>2<br>3<br>4<br>5<br>6<br>7<br>8<br>9<br>10<br>11<br>12<br>13<br>14<br>15<br>16<br>17<br>18<br>19<br>20<br>21<br>22<br>23<br>24<br>25<br>26<br>27<br>28<br>29<br>30<br>31<br>32<br>33<br>34<br>35<br>36<br>37<br>38<br>39<br>40<br>41<br>42<br>43<br>44<br>45<br>46<br>47<br>48<br>49<br>50<br>51<br>52<br>53<br>54<br>55<br>56<br>57<br>58<br>59<br>60<br>61<br>62<br>63<br>64<br>65</p>
+<p>反例，12-25行做的逻辑全部是check参数和适配组装等常见的service层无关的次要逻辑，显得整个isEnableToBy方法逻辑略显臃肿<br>//判断当前用户是否可以支付当该订单<br>@Autowired<br>private UserService userService;<br>@Autowired<br>private StockService stockService;<br>@Autowired<br>private MemberService memberService;<br>boolean isEnableToPay(String userId, String orderId) throws IOException {<br>    User user = userService.getUserInfoById(userId);<br>    if (user == null) {<br>        return false;<br>    }<br>    int age = user.getAge();<br>    String mobile = user.getMobile();<br>    String idCard = user.getIdCard();<br>    String address = user.getAddress();<br>    if (mobile != null &amp;&amp; mobile.length() &gt; 11) {<br>        throw new RuntimeException(“电话格式非法”);<br>    }<br>    if (age &lt; 18) {<br>        throw new RuntimeException(“年龄非法”);<br>    }<br>    UserDto userDto = new UserDto(user);<br>    boolean isMember = memberService.isMember(userDto);<br>    if(!isMember){<br>        return false;<br>    }<br>    boolean isOrderExist = orderService.isExist(orderId);<br>    if (!isOrderExist) {<br>        return false;<br>    }<br>    //step3:checkOrder<br>    boolean isOrderExist = orderService.isExist(orderId);<br>    if (!isOrderExist) {<br>        return false;<br>    }<br>    return true;<br>}<br>正例：尽量简化service逻辑，主干只保留了引入的service参与计算的逻辑，次要非service逻辑，抽离出去，显得过程会清晰，例子中isEnableToPay方法只干了3件事，a)获取用户信息、b)检测是否是会员、c)订单是否存在，完成了判断用户是否可以完成支付这件事，思路也比较清晰</p>
+<p>//判断当前用户是否可以支付该订单<br>boolean isEnableToPay(String userId, String orderId) throws IOException {<br>    //step1:get userInfo<br>    User user = userService.getUserInfoById(userId);<br>    boolean legalUser = UserUtil.checkUser(user);<br>    if (!legalUser) {<br>        return false;<br>    }<br>    //换行<br>    UserDto userDto = UserUtil.adapterUserDto(user);<br>    //step2:check isMember<br>    boolean isMember = memberService.isMember(userDto);<br>    if (!isMember) {<br>        return false;<br>    }<br>    //step3:checkOrder<br>    boolean isOrderExist = orderService.isExist(orderId);<br>    if (!isOrderExist) {<br>        return false;<br>    }</p>
+<pre><code>return true;
+</code></pre>
+<p>}</p>
+<p>4、类的职责问题<br>//4.1 XXXDao、XXXService<br>反例：订单服务接口定义中又出现了查询库存服务，势必service实现类又被迫引入了OrderDao，显得服务职责不够明确，后拆分期维护成本大<br>public interface OrderService {<br>    //有时 类名、方法名、参数、返回值 4者一起，可一起用来声明该方法<br>    boolean isExist(String orderId);</p>
+<pre><code>Order getOrderById(String orderId);
+ 
+Stock getStockInfo(String stockId);
+</code></pre>
+<p>}<br>正例：基础的Dao、Service层只做当前XXXDao、XXXService相关的CURD逻辑，禁止混用，复杂的业务可以再向上抽象一层service调度各基础层service做交互计算，最终在controller层统一收口</p>
+<p>public interface OrderService {<br>    boolean isExist(String orderId);</p>
+<pre><code>Order getOrderById(String orderId);
+</code></pre>
+<p>}<br>//将库存服务拆出去<br>public interface StockService {<br>    boolean isExist(String orderId);</p>
+<pre><code>Stock getStockInfo(String stockId);
+</code></pre>
+<p>}<br>//4.2 尽量不要在controller层做多余的逻辑（可以封装到serveice层)，controller层做到足够精简，另外bean、XXUtil里不应该引入service.</p>
+<p>5、bean的定义<br>业务上除了解析反序列化提取上游响应信息如：组件es、redis等复杂数据结构外，应该避免直接使用map包装大json，序列化VO或组装DTO时，应该定义好该数据结构。</p>
+<p>若不需要反序列化的Response json且创建的频率是小而频繁的，可以考虑使用 #com.baidu.icpd.common.model.LiteModel</p>
+<p>6、log、注释 规范<br>1、log<br>反例：<br>log.info(“success”);<br>正例：关键地方点，日志打印出当前上下文相关的信息，userId，sessionId等有价值的标示信息，否则grep日志排查比较困难，相当于没打日志<br>log.info(“pay success,userId:{},orderId:{},userId,orderId);</p>
+<p>2、注释<br>代码当中出现注释来解释代码，出现注释可能原因是作者认为某些内容没有说清楚，需要增加注释。有些注释比较有用：<br>之处为什么要使用特定的方式完成某个工作<br>引入了不常见的算法</p>
+<p>其他啰嗦的代码注释可以通过代码来自解释</p>
+<p>三、codeReview规范<br>   3.1 面向提交者<br>建议先 mvn clean compile -P dev  -Dmaven.test.skip=false 保证编译可通过，且已自测</p>
+<p>一次提交的代码量不要太大<br>一个评审的变更应该尽量小，只做一件事，如果一件事可以拆分成多件，那么应该对应为不同的cr，例如：尽量不要将【修复一个bug】和【重构一个函数】放在同一个评审里<br>精准指定reviewer （必须指定：1、自己当前负责开发模块相关负责人，2、小组所在具有+2权限的同学（blocking reviewer），3、及一起开发同一模块的小伙伴）<br>写好 commit message：见：【四、git commit message规范】</p>
+<pre><code>  6. 对于复杂大的新需求或重构，最好能在评审里附上需求背景及技术设计文档，方便评审者快速深入了解背景
+</code></pre>
+<p>  3.2 面向评审者<br>小组的blocking reviewer、模块负责人及时看icode评审提醒， 必须review代码，并给出结论（打分）<br>其余相关人员鼓励踊跃附上精彩评论，blocking reviewer可以作为参考，例如非blocking reviewer有2个+1，则blocking reviewer直接可以给出+2<br>CodeReview CheckList：<br>命名规范，是否见名知义？<br>类、函数是否太长，嵌套是否太深<br>代码是否具有较高的可读性，再过一年自己还能看懂吗？<br>对象NPE判断了吗、各种边界条件处理了吗？<br>API设计是否符合接口规范<br>代码是否明显存在可复用的地方？<br>线程安全、性能问题、是否为良好的设计模式、是否会有内存泄露？<br>事务一致性处理，依赖服务宕机时会发生什么？<br>自己遇到过同样的坑？<br>有testcase？<br>业务逻辑处理是否有明显的问题？<br>更多见【二、后端编程规范】<br>…<br>    4. 最佳实践：</p>
+<p>一次review代码在500行内，且不超过30分钟<br>及时review代码，确保当天的review任务当天完成，提升彼此效率<br>认真review，并对review结果负责<br>不要吝惜自己的comments<br>整个评审如果都看不懂，可以当面去问</p>
+<p>  反例：一块模块T由A1、A2一起开发，A0 是blocking reviewer，但由于A0没有及时review或没有仔细review就+2合入，同时也会间接造成A1不断的基于模块T提交bugFix，或A1可能后期就直接找不相干的B去合入。</p>
+<pre><code>          造成的影响是：有始无终，A0 没有能及时知晓且cover住A1代码可能会出现的问题，同时A2也完全不知道后期的变更，是一个尴尬的场景。
+</code></pre>
+<p>  正例：若B是blocking reviewer可以选择拒绝+2（特殊情况除外），A1、A2、A0应有始有终，也减少了A1返工fixBug甚至是面临方案重新设计的风险.</p>
+<p>   3.3 review带来的好处<br>提高代码质量<br>找出潜在bug，提高提测质量，避免来回返工<br>互相学习，提升团队coding水平<br>让其他不熟悉代码的人明白作者意图想法，便于以后轻松维护代码，必要时可backup</p>
+<p>四、git commit message规范<br>     commit message由icafe项目标识+【commit类型】+commitDescription组成.</p>
+<p>常用到的commit类型：<br>story（产品需求）<br>bugFix<br>refactor（重构&amp;优化）<br>Test（单元测试）<br>Other(不在上述范围内的) 等</p>
+<p>commitDescription原则：<br>尽量简短的一句话描述commit作用<br>最好使用中文<br>能体现出主、谓、宾、定<br>若有依赖关系，需要特殊体现</p>
+<p>带来的好处：<br>节省上线发布人员时间，可以清晰的判断变更带来的影响及回滚止损等<br> 规范后可以自动生成changLog也方便统计</p>
+<p>反例：</p>
+<ul>
+<li>| | 9dffee08d NextGenDialog-2677 fix bugs</li>
+<li>| | 5290ce960  Merge “NextGenDialog-2677 fix bugs” into feature-5.3</li>
+<li>| | 8323b4aae NextGenDialog-2679 fix</li>
+<li>| | 9fe529f2f NextGenDialog-2039 降低复杂度    //既像bug又像story</li>
+<li>| | a89f20243 AICP-WEB-3058 优化</li>
+</ul>
+<p>正例：</p>
+<ul>
+<li>| | 9dffee08d NextGenDialog-2677【bugfix】创建订单时未判断用户是否是会员</li>
+<li>| | 5290ce960  Merge “NextGenDialog-2677 【bugfix】创建订单时未判断用户是否是会员” into feature-5.3</li>
+<li>| | 9fe529f2f NextGenDialog-2039 【story】创建订单接口</li>
+<li>| | a89f20243 AICP-WEB-3058 【refactor】订单创建逻辑优化重构</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -390,7 +594,7 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2021-12-06 17:20:43" itemprop="dateModified" datetime="2021-12-06T17:20:43+08:00">2021-12-06</time>
+        <time title="Modified: 2021-12-06 17:23:58" itemprop="dateModified" datetime="2021-12-06T17:23:58+08:00">2021-12-06</time>
       </span>
 
   
@@ -1200,7 +1404,7 @@
 
 <div class="copyright">
   &copy; 
-  <span itemprop="copyrightYear">2021</span>
+  <span itemprop="copyrightYear">2022</span>
   <span class="with-love">
     <i class="fa fa-heart"></i>
   </span>
