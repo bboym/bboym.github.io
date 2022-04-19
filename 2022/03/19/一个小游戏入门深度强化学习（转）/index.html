@@ -1,0 +1,413 @@
+<!DOCTYPE html>
+<html lang="default">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222">
+<meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"yoursite.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.8.1","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":"valine","storage":true,"lazyload":false,"nav":null,"activeClass":"valine"},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"Searching...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+<meta name="description" content="今天我们来用深度强化学习算法 deep Q-learning 玩 CartPole 游戏。 强化学习是机器学习的一个重要分支，通过强化学习我们可以创建一个 agent，让它与环境不断地互动，不断试错，自主地从中学习到知识，进而做出决策。 如图所示，agent 收到环境的状态 state，做出行动 action，行动后会得到一个反馈，反馈包括奖励 reward 和环境的下一个状态 next_stat">
+<meta property="og:type" content="article">
+<meta property="og:title" content="一个小游戏入门深度强化学习">
+<meta property="og:url" content="http://yoursite.com/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/index.html">
+<meta property="og:site_name" content="bboym">
+<meta property="og:description" content="今天我们来用深度强化学习算法 deep Q-learning 玩 CartPole 游戏。 强化学习是机器学习的一个重要分支，通过强化学习我们可以创建一个 agent，让它与环境不断地互动，不断试错，自主地从中学习到知识，进而做出决策。 如图所示，agent 收到环境的状态 state，做出行动 action，行动后会得到一个反馈，反馈包括奖励 reward 和环境的下一个状态 next_stat">
+<meta property="og:locale">
+<meta property="og:image" content="http://yoursite.com/images/一个小游戏入门深度强化学习（转）/image-20220419102819294.png">
+<meta property="og:image" content="http://yoursite.com/images/一个小游戏入门深度强化学习（转）/image-20220419102848954.png">
+<meta property="og:image" content="http://yoursite.com/images/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/image-20220419102909036.png">
+<meta property="og:image" content="http://yoursite.com/images/一个小游戏入门深度强化学习（转）/image-20220419102957374.png">
+<meta property="og:image" content="http://yoursite.com/images/一个小游戏入门深度强化学习（转）/image-20220419103013594.png">
+<meta property="og:image" content="http://yoursite.com/images/一个小游戏入门深度强化学习（转）/image-20220419103543797.png">
+<meta property="og:image" content="http://yoursite.com/images/一个小游戏入门深度强化学习（转）/image-20220419103445191.png">
+<meta property="article:published_time" content="2022-03-19T02:25:10.000Z">
+<meta property="article:modified_time" content="2022-04-19T02:40:33.605Z">
+<meta property="article:author" content="bboym">
+<meta property="article:tag" content="DRL">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="http://yoursite.com/images/一个小游戏入门深度强化学习（转）/image-20220419102819294.png">
+
+
+<link rel="canonical" href="http://yoursite.com/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"default","comments":true,"permalink":"http://yoursite.com/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/","path":"2022/03/19/一个小游戏入门深度强化学习（转）/","title":"一个小游戏入门深度强化学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>一个小游戏入门深度强化学习 | bboym</title>
+  
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="Toggle navigation bar" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <h1 class="site-title">bboym</h1>
+      <i class="logo-line"></i>
+    </a>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          Table of Contents
+        </li>
+        <li class="sidebar-nav-overview">
+          Overview
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">bboym</p>
+  <div class="site-description" itemprop="description"></div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">10</span>
+          <span class="site-state-item-name">posts</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">5</span>
+        <span class="site-state-item-name">categories</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">8</span>
+        <span class="site-state-item-name">tags</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="default">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="bboym">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="bboym">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          一个小游戏入门深度强化学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">Posted on</span>
+
+      <time title="Created: 2022-03-19 10:25:10" itemprop="dateCreated datePublished" datetime="2022-03-19T10:25:10+08:00">2022-03-19</time>
+    </span>
+      <span class="post-meta-item">
+        <span class="post-meta-item-icon">
+          <i class="far fa-calendar-check"></i>
+        </span>
+        <span class="post-meta-item-text">Edited on</span>
+        <time title="Modified: 2022-04-19 10:40:33" itemprop="dateModified" datetime="2022-04-19T10:40:33+08:00">2022-04-19</time>
+      </span>
+
+  
+    <span id="/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="一个小游戏入门深度强化学习" title="Views">
+      <span class="post-meta-item-icon">
+        <i class="far fa-eye"></i>
+      </span>
+      <span class="post-meta-item-text">Views: </span>
+      <span class="leancloud-visitors-count"></span>
+    </span>
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>今天我们来用深度强化学习算法 deep Q-learning 玩 CartPole 游戏。</p>
+<p><strong>强化学习</strong>是机器学习的一个重要分支，通过强化学习我们可以创建一个 agent，让它与环境不断地互动，不断试错，自主地从中学习到知识，进而做出决策。</p>
+<p>如图所示，<code>agent</code> 收到环境的状态 <code>state</code>，做出行动 <code>action</code>，行动后会得到一个反馈，反馈包括奖励 <code>reward</code> 和环境的下一个状态 <code>next_state</code>。<br> 这样一轮操作下来，agent 便可以积累经验，并且从中训练，学习该如何根据 state 选择合适的 action 来获得较好的 reward 以获得游戏的最终胜利。</p>
+<img src="/images/一个小游戏入门深度强化学习（转）/image-20220419102819294.png" alt="image-20220419102819294" style="zoom:50%;" />
+
+<p><em>推荐阅读：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f4409a8b7f71">一文了解强化学习</a></em></p>
+<hr>
+<p>在强化学习中有一个著名算法 <strong>Q-learning</strong>：</p>
+<img src="/images/一个小游戏入门深度强化学习（转）/image-20220419102848954.png" alt="image-20220419102848954" style="zoom:50%;" />
+
+<p><em>推荐阅读：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dc79f9e43a1d">什么是 Q-learning</a></em></p>
+<p>2013 年，Google DeepMind 发表了论文 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1312.5602">Playing Atari with Deep Reinforcement Learning</a>，开辟了一个新的领域，深度学习和强化学习的结合，即深度强化学习。 其中介绍了 <strong>Deep Q Network</strong>，这个深度强化学习网络可以让 agent 仅仅通过观察屏幕就能学会玩游戏，不需要知道关于这个游戏的任何信息。</p>
+<p>在 Q-Learning 算法中，是通过一个 Q 函数，来估计对一个状态采取一个行动后所能得到的奖励 Q(s,a)，<br> 在 Deep Q Network  中，是用一个神经网络来估计这个奖励。</p>
+<hr>
+<p>接下来我们用一个很简单的游戏来看 Deep Q Network 是如何应用的。</p>
+<p>CartPole 这个游戏的<strong>目标是要使小车上面的杆保持平衡</strong>，</p>
+<p>state 包含四个信息：小车的位置，车速，杆的角度，杆尖端的速度<br> agent 的行动 action 包括两种：向左推车，向右推车</p>
+<ul>
+<li>在每轮游戏开始时，环境有一个初始的状态，</li>
+<li>agent 根据状态采取一个行动 <code>action = agent.act(state)</code>，</li>
+<li>这个 action 使得游戏进入下一个状态 <code>next_state</code>，并且拿到了奖励 <code>reward，next_state, reward, done, _ = env.step(action)</code>，</li>
+<li>然后 agent 会将之前的经验记录下来 <code>agent.remember(state, action, reward, next_state, done)</code>，</li>
+<li>当经验积累到一定程度后，agent 就从经验中学习改进 <code>agent.replay(batch_size)</code>，</li>
+<li>如果游戏结束了就打印一下所得分数，<br> 没有结束就更新一下状态后继续游戏 <code>state = next_state</code></li>
+</ul>
+<p><img src="/images/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/image-20220419102909036.png" alt="image-20220419102909036"></p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 初始化 gym 环境和 agent</span></span><br><span class="line">    env = gym.make(<span class="string">&#x27;CartPole-v1&#x27;</span>)</span><br><span class="line">    state_size = env.observation_space.shape[0]</span><br><span class="line">    action_size = env.action_space.n</span><br><span class="line">    agent = DQNAgent(state_size, action_size)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">done</span> = False</span><br><span class="line">    batch_size = 32</span><br><span class="line"></span><br><span class="line">    <span class="comment"># 开始迭代游戏</span></span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> range(EPISODES):</span><br><span class="line">    </span><br><span class="line">        <span class="comment"># 每次游戏开始时都重新设置一下状态</span></span><br><span class="line">        state = env.reset()</span><br><span class="line">        state = np.reshape(state, [1, state_size])</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># time 代表游戏的每一帧，</span></span><br><span class="line">        <span class="comment"># 每成功保持杆平衡一次得分就加 1，最高到 500 分，</span></span><br><span class="line">        <span class="comment"># 目标是希望分数越高越好</span></span><br><span class="line">        <span class="keyword">for</span> time <span class="keyword">in</span> range(500):</span><br><span class="line">            <span class="comment"># 每一帧时，agent 根据 state 选择 action</span></span><br><span class="line">            action = agent.act(state)</span><br><span class="line">            <span class="comment"># 这个 action 使得游戏进入下一个状态 next_state，并且拿到了奖励 reward</span></span><br><span class="line">            <span class="comment"># 如果杆依旧平衡则 reward 为 1，游戏结束则为 -10</span></span><br><span class="line">            next_state, reward, <span class="keyword">done</span>, _ = env.step(action)</span><br><span class="line">            reward = reward <span class="keyword">if</span> not <span class="keyword">done</span> <span class="keyword">else</span> -10</span><br><span class="line">            next_state = np.reshape(next_state, [1, state_size])</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 记忆之前的信息：state, action, reward, and done</span></span><br><span class="line">            agent.remember(state, action, reward, next_state, <span class="keyword">done</span>)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 更新下一帧的所在状态</span></span><br><span class="line">            state = next_state</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 如果杆倒了，则游戏结束，打印分数</span></span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">done</span>:</span><br><span class="line">                <span class="built_in">print</span>(<span class="string">&quot;episode: &#123;&#125;/&#123;&#125;, score: &#123;&#125;, e: &#123;:.2&#125;&quot;</span></span><br><span class="line">                      .format(e, EPISODES, time, agent.epsilon))</span><br><span class="line">                <span class="built_in">break</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 用之前的经验训练 agent   </span></span><br><span class="line">            <span class="keyword">if</span> len(agent.memory) &gt; batch_size:</span><br><span class="line">                agent.replay(batch_size)</span><br></pre></td></tr></table></figure>
+
+<hr>
+<p>接下来具体看每个部分：</p>
+<p><strong>1. agent 的网络用一个很简单的结构为例：</strong></p>
+<img src="/images/一个小游戏入门深度强化学习（转）/image-20220419102957374.png" alt="image-20220419102957374" style="zoom:50%;" />
+
+<p>在输入层有 4 个节点，用来接收 state 的 4 个信息：小车的位置，车速，杆的角度，杆尖端的速度，<br> 输出层有 2 个节点，因为 action 有 0，1 两个值：向左推车，向右推车，就对应着两个行为的奖励值。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">_build_model</span><span class="params">(<span class="keyword">self</span>)</span></span>:</span><br><span class="line">    model = Sequential()</span><br><span class="line">    model.add(Dense(<span class="number">24</span>, input_dim=<span class="keyword">self</span>.state_size, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">    model.add(Dense(<span class="number">24</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">    model.add(Dense(<span class="keyword">self</span>.action_size, activation=<span class="string">&#x27;linear&#x27;</span>))</span><br><span class="line">    model.compile(loss=<span class="string">&#x27;mse&#x27;</span>,</span><br><span class="line">                  optimizer=Adam(lr=<span class="keyword">self</span>.learning_rate))</span><br><span class="line">    <span class="keyword">return</span> model</span><br></pre></td></tr></table></figure>
+
+<p><strong>2. 需要定义一个损失函数来表示预测的 reward 和实际得到的奖励值的差距，这里用 mse，</strong></p>
+<img src="/images/一个小游戏入门深度强化学习（转）/image-20220419103013594.png" alt="image-20220419103013594" style="zoom:50%;" />
+
+<p>例如，杆现在向右倾斜，这时如果向右推小车，那么杆就可能继续保持平衡，游戏的分数就可以更高一些，也就是说向右推车比向左推车拿到的奖励要大，不过模型却预测成了向左推奖励大，这样就造成了差距，我们需要让差距尽量最小。</p>
+<p><strong>3. Agent 如何决定采取什么 action</strong></p>
+<p>游戏开始时为了让 agent 尽量多尝试各种情况，会以一定的几率 epsilon 随机地选择 action，<br> 之后它不再随机选择，开始根据当前状态预测 reward，然后用 <code>np.argmax()</code> 选择能最大化奖励的 action，<br> 例如 <code>act_values[0] = [0.67, 0.2]</code> 表示 aciton 为 0 和 1 时的 reward，这个的最大值的索引为 0.</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">act</span><span class="params">(<span class="keyword">self</span>, state)</span></span>:</span><br><span class="line">    <span class="keyword">if</span> np.random.rand() &lt;= <span class="keyword">self</span>.<span class="symbol">epsilon:</span></span><br><span class="line">        <span class="keyword">return</span> random.randrange(<span class="keyword">self</span>.action_size)</span><br><span class="line">    act_values = <span class="keyword">self</span>.model.predict(state)</span><br><span class="line">    <span class="keyword">return</span> np.argmax(act_values[<span class="number">0</span>])  <span class="comment"># returns action</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>4. 通过 Gym，agent 可以很轻松地就能与环境互动：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">next_state, reward, done, info = env.step(action)</span><br></pre></td></tr></table></figure>
+
+<p>env 代表游戏环境，action 为 0 或 1，将 action 传递给环境后，返回： done 表示游戏是否结束，<code>next_state</code> 和 reward 用来训练 agent。</p>
+<p>DQN 的特别之处在于 remember 和 replay 方法，</p>
+<p><strong>5. remember()</strong></p>
+<p>DQN 的一个挑战是，上面搭建的<strong>这个神经网络结构是会遗忘之前的经验的</strong>，因为它会不断用新的经验来覆盖掉之前的。<br> 所以我们需要一个列表来存储之前的经验，以备后面对模型训练时使用,<br> 这个存储经验的列表叫做 memory，</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">memory = [(state, action, reward, next_state, done)...]</span><br></pre></td></tr></table></figure>
+
+<p>存储的动作由 remember() 函数来完成，即将 state, action, reward, next state 附加到 memory 中。</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">remember</span><span class="params">(<span class="keyword">self</span>, state, action, reward, next_state, done)</span></span>:</span><br><span class="line">    <span class="keyword">self</span>.memory.append((state, action, reward, next_state, done))</span><br></pre></td></tr></table></figure>
+
+<p>**6. replay() **</p>
+<p>replay() 是用 memory 来<strong>训练</strong>神经网络的方法。</p>
+<ul>
+<li>首先从 memory 中取样，从中随机选取 <code>batch_size</code> 个数据：</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">minibatch = random.sample(self.memory, batch_size)</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>为了让 agent 能有长期的良好表现，我们不仅仅要考虑即时奖励，还要考虑未来奖励，即需要折扣率 gamma，</li>
+</ul>
+<p>具体讲就是我们先采取了行动 a，然后得到了奖励 r，并且到达了一个新的状态 next s，<br> 根据这组结果，我们计算最大的目标值 <code>np.amax()</code>，<br> 然后乘以一个 discount 率 gamma，将未来的奖励折算到当下，<br> 最后我们将当前的奖励和折算后的未来奖励相加得到目标奖励值：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">target = reward + gamma * np.amax(model.predict(next_state))</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li><code>target_f</code> 为前面建立的神经网络的输出，也就是损失函数里的 <code>Q(s,a)</code>，</li>
+<li>然后模型通过 fit() 方法学习输入输出数据对，</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">model.fit(state, reward_value, epochs=1, verbose=0)</span><br></pre></td></tr></table></figure>
+
+
+
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">replay</span><span class="params">(<span class="keyword">self</span>, batch_size)</span></span>:</span><br><span class="line">    minibatch = random.sample(<span class="keyword">self</span>.memory, batch_size)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">for</span> state, action, reward, next_state, done <span class="keyword">in</span> <span class="symbol">minibatch:</span></span><br><span class="line">        target = reward</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">not</span> <span class="symbol">done:</span></span><br><span class="line">            target = (reward + <span class="keyword">self</span>.gamma *</span><br><span class="line">                      np.amax(<span class="keyword">self</span>.model.predict(next_state)[<span class="number">0</span>]))</span><br><span class="line">        </span><br><span class="line">        target_f = <span class="keyword">self</span>.model.predict(state)</span><br><span class="line">        target_f[<span class="number">0</span>][action] = target</span><br><span class="line">        </span><br><span class="line">        <span class="keyword">self</span>.model.fit(state, target_f, epochs=<span class="number">1</span>, verbose=<span class="number">0</span>)</span><br><span class="line">    </span><br><span class="line">    <span class="keyword">if</span> <span class="keyword">self</span>.epsilon &gt; <span class="keyword">self</span>.<span class="symbol">epsilon_min:</span></span><br><span class="line">        <span class="keyword">self</span>.epsilon *= <span class="keyword">self</span>.epsilon_decay</span><br></pre></td></tr></table></figure>
+
+<p>完整代码如下：</p>
+<figure class="highlight ruby"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line">import random</span><br><span class="line">import gym</span><br><span class="line">import numpy as np</span><br><span class="line">from collections import deque</span><br><span class="line">from keras.models import Sequential</span><br><span class="line">from keras.layers import Dense</span><br><span class="line">from keras.optimizers import Adam</span><br><span class="line"></span><br><span class="line">EPISODES = <span class="number">1000</span>                             <span class="comment"># 让 agent 玩游戏的次数</span></span><br><span class="line"></span><br><span class="line"><span class="class"><span class="keyword">class</span> <span class="title">DQNAgent</span>:</span></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(<span class="keyword">self</span>, state_size, action_size)</span></span>:</span><br><span class="line">        <span class="keyword">self</span>.state_size = state_size</span><br><span class="line">        <span class="keyword">self</span>.action_size = action_size</span><br><span class="line">        <span class="keyword">self</span>.memory = deque(maxlen=<span class="number">2000</span>)</span><br><span class="line">        <span class="keyword">self</span>.gamma = <span class="number">0.95</span>                   <span class="comment"># 计算未来奖励时的折算率</span></span><br><span class="line">        <span class="keyword">self</span>.epsilon = <span class="number">1.0</span>                  <span class="comment"># agent 最初探索环境时选择 action 的探索率</span></span><br><span class="line">        <span class="keyword">self</span>.epsilon_min = <span class="number">0.01</span>             <span class="comment"># agent 控制随机探索的阈值</span></span><br><span class="line">        <span class="keyword">self</span>.epsilon_decay = <span class="number">0.995</span>          <span class="comment"># 随着 agent 玩游戏越来越好，降低探索率</span></span><br><span class="line">        <span class="keyword">self</span>.learning_rate = <span class="number">0.001</span></span><br><span class="line">        <span class="keyword">self</span>.model = <span class="keyword">self</span>._build_model()</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_build_model</span><span class="params">(<span class="keyword">self</span>)</span></span>:</span><br><span class="line">        model = Sequential()</span><br><span class="line">        model.add(Dense(<span class="number">24</span>, input_dim=<span class="keyword">self</span>.state_size, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">        model.add(Dense(<span class="number">24</span>, activation=<span class="string">&#x27;relu&#x27;</span>))</span><br><span class="line">        model.add(Dense(<span class="keyword">self</span>.action_size, activation=<span class="string">&#x27;linear&#x27;</span>))</span><br><span class="line">        model.compile(loss=<span class="string">&#x27;mse&#x27;</span>,</span><br><span class="line">                      optimizer=Adam(lr=<span class="keyword">self</span>.learning_rate))</span><br><span class="line">        <span class="keyword">return</span> model</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">remember</span><span class="params">(<span class="keyword">self</span>, state, action, reward, next_state, done)</span></span>:</span><br><span class="line">        <span class="keyword">self</span>.memory.append((state, action, reward, next_state, done))</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">act</span><span class="params">(<span class="keyword">self</span>, state)</span></span>:</span><br><span class="line">        <span class="keyword">if</span> np.random.rand() &lt;= <span class="keyword">self</span>.<span class="symbol">epsilon:</span></span><br><span class="line">            <span class="keyword">return</span> random.randrange(<span class="keyword">self</span>.action_size)</span><br><span class="line">        act_values = <span class="keyword">self</span>.model.predict(state)</span><br><span class="line">        <span class="keyword">return</span> np.argmax(act_values[<span class="number">0</span>])  </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="keyword">def</span> <span class="title">replay</span><span class="params">(<span class="keyword">self</span>, batch_size)</span></span>:</span><br><span class="line">        minibatch = random.sample(<span class="keyword">self</span>.memory, batch_size)</span><br><span class="line">        <span class="keyword">for</span> state, action, reward, next_state, done <span class="keyword">in</span> <span class="symbol">minibatch:</span></span><br><span class="line">            target = reward</span><br><span class="line">            <span class="keyword">if</span> <span class="keyword">not</span> <span class="symbol">done:</span></span><br><span class="line">                target = (reward + <span class="keyword">self</span>.gamma *</span><br><span class="line">                          np.amax(<span class="keyword">self</span>.model.predict(next_state)[<span class="number">0</span>]))</span><br><span class="line">            target_f = <span class="keyword">self</span>.model.predict(state)</span><br><span class="line">            target_f[<span class="number">0</span>][action] = target</span><br><span class="line">            <span class="keyword">self</span>.model.fit(state, target_f, epochs=<span class="number">1</span>, verbose=<span class="number">0</span>)</span><br><span class="line">        <span class="keyword">if</span> <span class="keyword">self</span>.epsilon &gt; <span class="keyword">self</span>.<span class="symbol">epsilon_min:</span></span><br><span class="line">            <span class="keyword">self</span>.epsilon *= <span class="keyword">self</span>.epsilon_decay</span><br><span class="line">            </span><br><span class="line">            </span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&quot;__main__&quot;</span>:</span><br><span class="line">    </span><br><span class="line">    <span class="comment"># 初始化 gym 环境和 agent</span></span><br><span class="line">    env = gym.make(<span class="string">&#x27;CartPole-v1&#x27;</span>)</span><br><span class="line">    state_size = env.observation_space.shape[<span class="number">0</span>]</span><br><span class="line">    action_size = env.action_space.n</span><br><span class="line">    agent = DQNAgent(state_size, action_size)</span><br><span class="line">    </span><br><span class="line">    done = False</span><br><span class="line">    batch_size = <span class="number">32</span></span><br><span class="line"></span><br><span class="line">    <span class="comment"># 开始迭代游戏</span></span><br><span class="line">    <span class="keyword">for</span> e <span class="keyword">in</span> range(EPISODES):</span><br><span class="line">    </span><br><span class="line">        <span class="comment"># 每次游戏开始时都重新设置一下状态</span></span><br><span class="line">        state = env.reset()</span><br><span class="line">        state = np.reshape(state, [<span class="number">1</span>, state_size])</span><br><span class="line">        </span><br><span class="line">        <span class="comment"># time 代表游戏的每一帧，</span></span><br><span class="line">        <span class="comment"># 每成功保持杆平衡一次得分就加 1，最高到 500 分，</span></span><br><span class="line">        <span class="comment"># 目标是希望分数越高越好</span></span><br><span class="line">        <span class="keyword">for</span> time <span class="keyword">in</span> range(<span class="number">500</span>):</span><br><span class="line">            <span class="comment"># 每一帧时，agent 根据 state 选择 action</span></span><br><span class="line">            action = agent.act(state)</span><br><span class="line">            <span class="comment"># 这个 action 使得游戏进入下一个状态 next_state，并且拿到了奖励 reward</span></span><br><span class="line">            <span class="comment"># 如果杆依旧平衡则 reward 为 1，游戏结束则为 -10</span></span><br><span class="line">            next_state, reward, done, _ = env.step(action)</span><br><span class="line">            reward = reward <span class="keyword">if</span> <span class="keyword">not</span> done <span class="keyword">else</span> -<span class="number">10</span></span><br><span class="line">            next_state = np.reshape(next_state, [<span class="number">1</span>, state_size])</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 记忆之前的信息：state, action, reward, and done</span></span><br><span class="line">            agent.remember(state, action, reward, next_state, done)</span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 更新下一帧的所在状态</span></span><br><span class="line">            state = next_state</span><br><span class="line"></span><br><span class="line">            <span class="comment"># 如果杆倒了，则游戏结束，打印分数</span></span><br><span class="line">            <span class="keyword">if</span> <span class="symbol">done:</span></span><br><span class="line">                print(<span class="string">&quot;episode: &#123;&#125;/&#123;&#125;, score: &#123;&#125;, e: &#123;:.2&#125;&quot;</span></span><br><span class="line">                      .format(e, EPISODES, time, agent.epsilon))</span><br><span class="line">                <span class="keyword">break</span></span><br><span class="line">            </span><br><span class="line">            <span class="comment"># 用之前的经验训练 agent   </span></span><br><span class="line">            <span class="keyword">if</span> len(agent.memory) &gt; <span class="symbol">batch_size:</span></span><br><span class="line">                agent.replay(batch_size)</span><br></pre></td></tr></table></figure>
+
+<p>效果图：</p>
+<img src="/images/一个小游戏入门深度强化学习（转）/image-20220419103543797.png" alt="image-20220419103543797" style="zoom:25%;" />
+
+<img src="/images/一个小游戏入门深度强化学习（转）/image-20220419103445191.png" alt="image-20220419103445191" style="zoom:50%;" />
+
+
+
+<p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7014c89abeea">https://www.jianshu.com/p/7014c89abeea</a></p>
+<p><strong>DRL相关：</strong></p>
+<p>环境：<a target="_blank" rel="noopener" href="https://gym.openai.com/">https://gym.openai.com/</a></p>
+<p>easyRL：<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/">https://datawhalechina.github.io/easy-rl/#/</a></p>
+<p>神经网络与深度学习：<a target="_blank" rel="noopener" href="https://nndl.github.io/nndl-book.pdf">https://nndl.github.io/nndl-book.pdf</a></p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/DRL/" rel="tag"># DRL</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2022/02/18/%E8%BF%90%E7%BB%B4%E6%8A%80%E8%83%BD/" rel="prev" title="运维技能">
+                  <i class="fa fa-chevron-left"></i> 运维技能
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+    <div class="comments" id="valine-comments"></div>
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">bboym</span>
+</div>
+  <div class="powered-by">Powered by <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+
+<script class="next-config" data-name="valine" type="application/json">{"enable":true,"appId":"tJcNaqdwInnVsP8vx7ezR1Oh-gzGzoHsz","appKey":"vII23FLEbDtHRSOo2xsYCcLJ","serverURLs":"https://tjcnaqdw.lc-cn-n1-shared.com","placeholder":"Just go go","avatar":"mm","meta":["nick","mail","link"],"pageSize":10,"lang":null,"visitor":true,"comment_count":true,"recordIP":false,"enableQQ":false,"requiredFields":[],"el":"#valine-comments","path":"/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/"}</script>
+<script>
+document.addEventListener('page:loaded', () => {
+  NexT.utils.loadComments(CONFIG.valine.el)
+    .then(() => NexT.utils.getScript(
+      'https://cdn.jsdelivr.net/npm/valine@1.4.14/dist/Valine.min.js',
+      { condition: window.Valine }
+    ))
+    .then(() => {
+      new Valine(CONFIG.valine);
+    });
+});
+</script>
+
+</body>
+</html>
