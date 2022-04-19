@@ -177,7 +177,7 @@
     </span>
       <header class="post-header">
         <h2 class="post-title" itemprop="name headline">
-          <a href="/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/" class="post-title-link" itemprop="url">一个小游戏入门深度强化学习(转)</a>
+          <a href="/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/" class="post-title-link" itemprop="url">一个小游戏入门深度强化学习</a>
         </h2>
 
         <div class="post-meta-container">
@@ -195,11 +195,11 @@
           <i class="far fa-calendar-check"></i>
         </span>
         <span class="post-meta-item-text">Edited on</span>
-        <time title="Modified: 2022-04-19 14:58:27" itemprop="dateModified" datetime="2022-04-19T14:58:27+08:00">2022-04-19</time>
+        <time title="Modified: 2022-04-19 15:21:15" itemprop="dateModified" datetime="2022-04-19T15:21:15+08:00">2022-04-19</time>
       </span>
 
   
-    <span id="/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="一个小游戏入门深度强化学习(转)" title="Views">
+    <span id="/2022/03/19/%E4%B8%80%E4%B8%AA%E5%B0%8F%E6%B8%B8%E6%88%8F%E5%85%A5%E9%97%A8%E6%B7%B1%E5%BA%A6%E5%BC%BA%E5%8C%96%E5%AD%A6%E4%B9%A0%EF%BC%88%E8%BD%AC%EF%BC%89/" class="post-meta-item leancloud_visitors" data-flag-title="一个小游戏入门深度强化学习" title="Views">
       <span class="post-meta-item-icon">
         <i class="far fa-eye"></i>
       </span>
@@ -216,17 +216,19 @@
     
     
     <div class="post-body" itemprop="articleBody">
-          <p>今天我们来用深度强化学习算法 deep Q-learning 玩 CartPole 游戏。</p>
+          <p>用深度强化学习算法 deep Q-learning 玩 CartPole 游戏。</p>
 <p><strong>强化学习</strong>是机器学习的一个重要分支，通过强化学习我们可以创建一个 agent，让它与环境不断地互动，不断试错，自主地从中学习到知识，进而做出决策。</p>
 <p>如图所示，<code>agent</code> 收到环境的状态 <code>state</code>，做出行动 <code>action</code>，行动后会得到一个反馈，反馈包括奖励 <code>reward</code> 和环境的下一个状态 <code>next_state</code>。<br> 这样一轮操作下来，agent 便可以积累经验，并且从中训练，学习该如何根据 state 选择合适的 action 来获得较好的 reward 以获得游戏的最终胜利。</p>
 <img src="/images/一个小游戏入门深度强化学习（转）/image-20220419102819294.png" alt="image-20220419102819294" style="zoom:50%;" />
 
-<p><em>推荐阅读：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/f4409a8b7f71">一文了解强化学习</a></em></p>
+
+
 <hr>
 <p>在强化学习中有一个著名算法 <strong>Q-learning</strong>：</p>
 <img src="/images/一个小游戏入门深度强化学习（转）/image-20220419102848954.png" alt="image-20220419102848954" style="zoom:50%;" />
 
-<p><em>推荐阅读：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/dc79f9e43a1d">什么是 Q-learning</a></em></p>
+
+
 <p>2013 年，Google DeepMind 发表了论文 <a target="_blank" rel="noopener" href="https://arxiv.org/abs/1312.5602">Playing Atari with Deep Reinforcement Learning</a>，开辟了一个新的领域，深度学习和强化学习的结合，即深度强化学习。 其中介绍了 <strong>Deep Q Network</strong>，这个深度强化学习网络可以让 agent 仅仅通过观察屏幕就能学会玩游戏，不需要知道关于这个游戏的任何信息。</p>
 <p>在 Q-Learning 算法中，是通过一个 Q 函数，来估计对一个状态采取一个行动后所能得到的奖励 Q(s,a)，<br> 在 Deep Q Network  中，是用一个神经网络来估计这个奖励。</p>
 <hr>
@@ -305,7 +307,7 @@
 
 
 
-<p>参考：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7014c89abeea">https://www.jianshu.com/p/7014c89abeea</a></p>
+<p>参考来源：<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/7014c89abeea">https://www.jianshu.com/p/7014c89abeea</a></p>
 <p><strong>DRL相关：</strong></p>
 <p>环境：<a target="_blank" rel="noopener" href="https://gym.openai.com/">https://gym.openai.com/</a></p>
 <p>easyRL：<a target="_blank" rel="noopener" href="https://datawhalechina.github.io/easy-rl/#/">https://datawhalechina.github.io/easy-rl/#/</a></p>
